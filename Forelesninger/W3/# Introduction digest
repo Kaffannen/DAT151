@@ -1,0 +1,29 @@
+Main subjects
+
+Database administration
+    Installation
+        Use MariaDB for course
+    Performance tuning
+        tuning cache, filesystem memory etc 
+        optimize sql
+        optimize datamodel
+    Varous topics
+        security    
+        Backup and recovery
+        replication
+        database clusters
+        design of physical database
+        transactions
+        concurrency
+    
+
+Unix systems administration
+    Linux / UNIX history
+        Unix created by bell 
+        Linux was created by opengroup in 80's (done 93) as an open source responsible
+        Almalinux is public version of red hat enterprise linux (RHEL)
+        CentOS is defunct similar thing
+            now functions as a 'dev' version of RHEL
+        Linux sees little use with consumers (around 5%), but is widely used in server and embedded 
+        small systems
+        

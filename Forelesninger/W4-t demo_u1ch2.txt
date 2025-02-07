@@ -1,0 +1,255 @@
+#On AlmaLinux computer:
+
+########################################################################
+#Slide 6
+
+df
+findmnt /boot/efi
+
+#As root:
+sudo ls -l /boot/efi
+sudo ls -l /boot/efi/EFI
+sudo ls -l /boot/efi/efi
+sudo ls -l /boot/efi/EFI/BOOT/
+sudo ls -l /boot/efi/EFI/almalinux
+
+mount | grep efivars
+sudo ls -l /sys/firmware/efi/efivars
+
+sudo efibootmgr
+sudo efibootmgr -v
+lsblk -o NAME,UUID,PARTUUID,MOUNTPOINT
+sudo ls -l /boot/efi/EFI/almalinux/shimx64.efi
+findmnt /dev/sda1
+
+sudo ls -l /boot/efi/EFI/almalinux/shimx64.efi
+
+sudo efibootmgr -c -L "BOOTX64" -d /dev/sda -p 1 -l '\EFI\BOOT\BOOTX64.EFI'
+sudo efibootmgr -v
+sudo efibootmgr --bootorder 0003,0004,0002,0000,0001
+sudo efibootmgr -B -b 0004
+
+
+########################################################################
+#Slide 7
+
+sudo ls -l /boot/efi/EFI/almalinux/grubx64.efi
+
+# If BIOS or UEFI legacy boot
+  sudo less /boot/grub2/grub.cfg
+# If UEFI boot
+  sudo ls -l /boot/efi/EFI/almalinux/grub.cfg
+  sudo less /boot/efi/EFI/almalinux/grub.cfg
+
+lsblk -o NAME,UUID,PARTUUID,MOUNTPOINT
+
+sudo ls -l /etc/grub.d
+less /etc/default/grub
+
+sudo grub2-mkconfig
+
+sudo grub2-mkconfig > /boot/grub2/grub.cfg
+
+
+########################################################################
+#Slide 8
+less /boot/grub2/grub.cfg
+grub2-editenv list
+less /etc/default/grub
+
+
+########################################################################
+#Slide 9.
+
+grub2-editenv - unset menu_auto_hide
+#In file /etc/default/grub, set
+#GRUB_TIMEOUT=10
+
+#Demo on AlmaComputer at Hyper-V cluster
+
+# In grub-stansa, kernel line, set init system to run bash
+
+init=/bin/bash
+F10 to boot
+
+#Norwegian keyboard and grub window:
+# Press '\' to get '='
+# Press '-' to get '/'
+
+
+findmnt /
+# When logged in
+mount -o remount,rw /
+
+
+########################################################################
+#Slide 10
+
+ps -p 1
+pstree -p
+
+
+########################################################################
+#Slide 12
+
+man systemd.unit
+
+cd /lib/systemd/system; pwd -P
+
+less /usr/lib/systemd/system/mariadb.service
+
+less /usr/lib/systemd/system/mlocate-updatedb.timer
+less /usr/lib/systemd/system/graphical.target
+less /usr/lib/systemd/system/syslog.socket
+less /usr/lib/systemd/system/tmp.mount
+
+pkg-config systemd --variable=systemdsystemunitdir
+
+
+########################################################################
+#Slide 13
+
+man systemctl
+systemctl list-units
+systemctl list-unit-files
+
+systemctl list-units --type=service
+systemctl list-unit-files --type=service
+systemctl list-unit-files --type=service --no-pager
+
+
+########################################################################
+#Slide 14
+
+ll /usr/lib/systemd/system/mariadb.service
+less /usr/lib/systemd/system/mariadb.service
+ll /etc/systemd/system/multi-user.target.wants
+ll /etc/systemd/system/multi-user.target.wants/mariadb.service
+
+sudo systemctl status mariadb.service
+ls -l /etc/systemd/system/multi-user.target.wants/mariadb.service
+sudo systemctl enable mariadb.service
+ll /etc/systemd/system/multi-user.target.wants/mariadb.service
+sudo systemctl disable mariadb.service
+
+sudo systemctl mask mariadb.service
+sudo systemctl unmask mariadb.service
+sudo systemctl status mariadb.service
+
+sudo systemctl disable sshd
+sudo systemctl enable sshd
+
+
+########################################################################
+#Slide 15
+
+sudo systemctl status mariadb.service
+sudo systemctl start mariadb.service
+sudo systemctl stop mariadb.service
+sudo systemctl status -l mariadb.service
+
+
+########################################################################
+#Slide 16
+
+systemctl list-unit-files --no-pager --type=service
+
+
+########################################################################
+#Slide 17
+
+systemctl list-units --type=target
+
+less /usr/lib/systemd/system/multi-user.target
+
+#Observe: Also dependency through WantedBy that list target
+ls -l /etc/systemd/system/multi-user.target.wants/
+
+less /usr/lib/systemd/system/graphical.target
+ll /usr/lib/systemd/system/display-manager.service # Do not exist
+ll /etc/systemd/system/display-manager.service
+#GDM is the graphical login system
+less /usr/lib/systemd/system/gdm.service
+
+
+########################################################################
+#Slide 18
+
+man 7 systemd.special
+less /usr/lib/systemd/system/basic.target
+ls -l /etc/systemd/system/default.target
+less /usr/lib/systemd/system/graphical.target
+
+# See e.g. also printer.target, sound.target, usb-gadget.target in man 7 systemd.special
+
+# The runlevel targets, simulates the old init system
+ls -l /usr/lib/systemd/system/runlevel*.target
+
+
+########################################################################
+#Slide 19
+
+systemctl get-default
+sudo systemctl set-default multi-user.target
+sudo systemctl set-default graphical.target
+
+less /usr/lib/systemd/system/graphical.target
+less /usr/lib/systemd/system/multi-user.target
+# Require AllowIsolate=yes
+
+sudo systemctl isolate multi-user.target
+# Does have some flaws
+
+man 7 systemd.special
+systemd.unit=emergency.target
+# also
+systemd.unit=rescue.target
+
+# rescue.target starts more services and mount filesystems
+# mount -o remount,rw / - Not necessary if rescue.target
+
+
+########################################################################
+#Slide 20
+man 7 systemd.directives
+man 5 systemd.unit
+
+man 5 systemd.service
+# Search for DefaultDependencies
+
+
+########################################################################
+Slide 21
+man 5 systemd.service
+
+less /usr/lib/systemd/system/mariadb.service
+# WantedBy - where symbolic link show what to be created on enable service
+# Type fork, service forks, and process is immediately terminated
+#      notify, service will inform when up and running, andsystemd will then continue
+
+sudo systemctl edit mariadb.service
+
+ll /etc/systemd/system/mariadb.service.d/
+less /etc/systemd/system/mariadb.service.d/override.conf
+
+systemctl cat mariadb.service
+
+
+########################################################################
+#Slide 22
+
+systemctl cat mariadb.service
+systemctl show --no-pager -p Description mariadb.service
+systemctl show --no-pager -p After mariadb.service
+
+sudo rm /etc/systemd/system/mariadb.service.d/override.conf
+
+
+########################################################################
+#Slide 23
+
+journalctl -u mariadb.service
+sudo cat /var/log/messages | grep 'mariadbd'
+
+cat /var/log/messages
+

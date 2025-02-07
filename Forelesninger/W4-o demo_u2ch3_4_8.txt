@@ -1,0 +1,484 @@
+########################################################################
+#Slide 5
+
+less /etc/passwd
+less /etc/group
+
+
+########################################################################
+Slide 6
+
+# Demo of ls -l and uid and gid, demo only on my computer
+ls -l ~/tmp
+
+#Char at end of file mode bits: Specifies whether an alternate access method
+#such as an access control list applies to the file
+#https://www.gnu.org/software/coreutils/manual/html_node/What-information-is-listed.html
+# * "." : file with a security context, but no other alternate access method. 
+# * "+" : any other combination of alternate access methods, e.g. ACL
+
+
+########################################################################
+#Slide 7
+
+ps -p $$ -o cmd,pid,ruid,euid,suid,fuid,rgid,egid,sgid,fgid
+
+ls -l /etc/shadow
+
+# Run passwd program
+ps -C passwd -o pid,cmd
+ps -C passwd -o pid,cmd,ruid,euid,suid,fuid,rgid,egid,sgid,fgid
+
+pid=$(ps h -C passwd -o pid)
+kill $pid
+
+
+########################################################################
+#Slide 9
+
+ls -l /bin/passwd
+
+
+########################################################################
+#Slide 10
+
+# Demo of su
+su -
+# Root su to user
+su - bki
+
+# Demo sudo
+ls -l /etc/shadow
+cat /etc/shadow
+sudo cat /etc/shadow
+id bki
+
+# Demo av sudo -i
+
+########################################################################
+#Slide 13
+
+sudo less /etc/sudoers
+# Fields:
+# user machines = (runas user) command
+
+# Show  %wheel authorizations
+
+sudo ls -l /etc/sudoers.d/
+sudo less /etc/sudoers.d/mount
+
+sudo -u testuser /bin/ls /home/testuser/aa
+sudo -u testuser /bin/cat /home/testuser/aa/hello.txt
+
+man sudoers
+man 5 sudoers
+
+sudo journalctl -t sudo
+sudo journalctl -t su
+
+sudo --list
+LANG=C sudo --list
+
+#As root
+echo $EDITOR
+systemctl edit mariadb.service
+#As normal user
+sudo systemctl edit mariadb.service
+sudo EDITOR=emacs systemctl edit mariadb.service
+# OR, to preserve environment of user, if allowed
+sudo -E systemctl edit mariadb.service
+
+sudo cat /etc/shadow > /root/shadow_copy
+
+sudo cat /etc/shadow | sudo tee /root/shadow_copy1 > /dev/null
+sudo cat /root/shadow_copy1
+sudo rm /root/shadow_copy1
+
+sudo cat /etc/shadow | sudo dd of=/root/shadow_copy2
+sudo cat /root/shadow_copy2
+sudo rm /root/shadow_copy2
+
+
+########################################################################
+#Slide 14
+
+# %MYSQL_ADMINS ALL = (mysql) NOPASSWORD: /usr/local/bin/mysqlbackup
+%: group
+
+# user machines = (runas user) command
+
+
+########################################################################
+#Slide 15
+
+less /etc/passwd
+
+less /etc/login.defs
+ll -l /var/lib/mysql
+
+ps -p $$ -o pid,cmd,ruser,euser,rgroup,egroup
+sudo systemctl start mariadb
+ps -C mariadbd -o pid,cmd,ruser,euser,rgroup,egroup
+
+
+########################################################################
+Slide 16
+
+less /etc/pam.d/system-auth
+
+man pam
+
+# Facilities:
+# auth: responsible for checking that the user is who they say
+# - E.g. prompting for a passord.
+
+# account: account verification, user's password expired? Is this use allowd the access?
+# Does user have local or remote access? Are user allowed this service at this time of daY?
+
+# password:
+# Responsible for updating authentication mechanisms, e.g.
+# changig password
+
+# session:
+# Things to do prior to a service being given and after it is withdrawn, e.g. setting resource limits.
+# -session: Do not log if module can not be loaded because missing
+
+# Within facility:
+# required:
+# If fail, operation will ultimately fail, but only after the modules below
+# it are invoked
+
+# requisite:
+# If fail, operation is immediately terminated with a failure without
+# invoking any other modules
+
+# sufficient:
+# If Ok, skip remaining sufficient modules
+
+# optional:
+# If fail, fail if no other modules are OK.
+
+# [default=1 ignore=ignore success=ok] : Advanced options
+# ignore and success are two of the possible return codes of pam modules.
+# default represnt all codes not explicitely listed
+# values:If return status of module is:
+# * ok - the return code should contribute to authentication decision
+# * ignore- ignore the return code in the authentication decision
+# * 1: Skip the next line in the file 
+
+
+########################################################################
+#Slide 17
+
+echo "Hello" > /tmp/fil.txt
+chmod 600 /tmp/fil.txt
+cat /tmp/fil.txt
+ls -l /tmp/fil.txt
+sudo -u testuser cat /tmp/fil.txt
+
+setfacl -m u:testuser:r /tmp/fil.txt
+getfacl /tmp/fil.txt
+sudo -u testuser cat /tmp/fil.txt
+ls -l /tmp/fil.txt
+
+setfacl -b /tmp/fil.txt
+rm /tmp/fil.txt
+
+
+########################################################################
+#Slide 18:
+
+man capabilities
+
+#cd /home/bki/undervisning/klasser/DAT151/svn/V2025/lectures/unix/u2_ch3_4_8/cpp
+
+# As user bki@dat151
+[ -d ~/bin ] || mkdir ~/bin
+wget -P ~/bin/ https://eple.hvl.no/fag/dat151/v2025/showfile.cpp
+g++ ~/bin/showfile.cpp -o ~/bin/showfile
+
+#Demo
+showfile /home/bki/.bash_profile
+showfile /root/.bash_profile
+showfile /etc/shadow
+
+# Setting capabilities
+sudo setcap cap_dac_override=ep ~/bin/showfile
+getcap ~/bin/showfile
+
+# e -> Effective
+# p -> Permitted
+# i -> Inheritable
+
+man capabilities # CAP_DAC_OVERRIDE
+
+# As bki
+showfile /root/.bash_profile
+showfile /etc/shadow
+
+# Remove the capability
+sudo setcap -r ~/bin/showfile
+
+
+########################################################################
+Slide 20
+
+# User namespace
+unshare --user /bin/bash
+echo $$
+pstree -p $$
+echo $$ > /tmp/pid
+
+#In other bash terminal:
+pid=$(cat /tmp/pid)
+newuidmap $pid 0 47552 1 1 100000 999 48000 110000 10
+newgidmap $pid 0 47552 1 1 100000 999 48000 110000 10
+
+#In original treminal:
+id
+
+# pid - process namespace
+# uts - hostname
+# net - network
+unshare --fork --pid --uts --net --mount-proc /bin/bash
+mount --make-rprivate /
+pstree -p
+
+# Mount namespace
+unshare --mount /bin/bash
+
+mkdir /home/bki/tmp/aa
+mount -t tmpfs tmpfs /home/bki/tmp/aa
+echo "Hello dat151" > /home/bki/tmp/aa/aFile.txt
+cat /home/bki/tmp/aa/aFile.txt
+ll /home/bki/tmp/aa
+ll /home/bki/tmp/aa/aFile.txt
+
+hostname
+
+hostname mycomputer.hvl.no
+
+#In namespace
+ls -l /etc
+touch /etc/yy
+
+
+########################################################################
+#Slide 23
+id -Z
+ps -Z
+ls -Z
+
+ps -Z -C mariadbd
+ls -Z /var/lib/mysql/ib_buffer_pool
+
+# Details in lab assignment.
+
+
+########################################################################
+#Slide 26
+pstree -p 1 | less
+pstree -p $$
+
+ps -p $$ -o pid,ppid,tty,nice,cmd
+pstree -p $PPID
+
+########################################################################
+#Slide 27
+
+emacs file.txt&
+
+ps -C emacs
+pid=$(ps h -C emacs -o pid)
+echo $pid
+
+kill -s 19 $pid
+kill -s SIGSTOP $pid
+
+kill -s 18 $pid
+kill -s SIGCONT $pid
+
+
+########################################################################
+#Slide 28
+
+ps -C emacs
+pidof /usr/bin/emacs
+pgrep -u bki emacs
+
+nice -n 10 emacs fil.txt&
+ps -o pid,nice,cmd -C emacs
+pid=$(ps h -C emacs -o pid)
+echo $pid
+
+renice 15 -p $pid
+ps -o pid,nice,cmd -C emacs
+
+renice 10 -p $pid
+
+strace -p $pid
+
+
+########################################################################
+#Slide 33
+
+cat /proc/1/cmdline | tr '\000' '\n'
+
+sudo cat /proc/1/environ | tr '\000' '\n'
+sudo ls -l /proc/1/fd
+
+
+########################################################################
+#Slide 35
+
+cat /etc/crontab
+
+ls -l /etc/cron.d
+less /etc/cron.d/0hourly
+
+ls -ld /etc/cron.*
+ls -l /etc/cron.hourly
+
+cat /etc/anacrontab
+less /etc/cron.hourly/0anacron
+
+man crontab
+
+crontab -e
+
+# Add below to crontab file on above command
+MAILTO=bki
+PATH=/usr/bin
+*/2  8-15  *  *  1-4 date >> /tmp/file.txt
+
+sudo cat /var/spool/cron/bki
+crontab -l
+
+cat /tmp/file.txt
+
+crontab -r
+
+cat > ~/tmp/mycron <<EOF
+MAILTO=bki
+PATH=/bin
+*/2  8-15  *  *  1-4 date >> /tmp/file2.txt
+EOF
+
+cat ~/tmp/mycron
+
+crontab ~/tmp/mycron
+crontab -l
+
+cat /tmp/file2.txt
+
+crontab -r
+
+sudo cat /var/log/cron
+journalctl -t crond
+journalctl --unit=crond.service
+
+
+########################################################################
+#Slide 36
+
+man 5 anacrontab
+
+
+########################################################################
+#Slide 37
+
+systemctl list-timers
+less /usr/lib/systemd/system/dnf-makecache.timer
+less /usr/lib/systemd/system/logrotate.timer
+
+
+########################################################################
+#Slide 39
+
+less /etc/nsswitch.conf
+man 5 nsswitch.conf
+
+On computer bjarte@slurmw1:
+less /etc/nsswitch.conf
+id bjarte
+id student1
+
+########################################################################
+#Slide 40
+
+less /etc/passwd
+cat /etc/passwd | grep bki
+getent passwd bki
+man 5 passwd
+id bki
+id -G bki
+id -Gn bki
+
+less /etc/shadow
+sudo cat /etc/shadow | grep bki
+sudo getent shadow bki
+man 5 shadow
+
+getent group wheel
+
+sudo cat /etc/gshadow
+sudo getent gshadow wheel
+
+
+########################################################################
+#Slide 41
+sudo getent shadow bki
+man 5 crypt
+
+less /etc/security/pwquality.conf
+man pam_pwquality
+
+less /etc/security/faillock.conf
+man pam_faillock
+
+man faillock
+sudo faillock --user bki
+
+# See also pam_faillock.so, pam_pwquality.so lines in /etc/pam.d/system-auth
+
+sudo authselect enable-feature with-faillock
+sudo authselect disable-feature with-faillock
+
+
+########################################################################
+#Slide 42
+
+sudo -E vipw
+sudo -E vipw -s
+sudo -E vigr
+sudo -E vigr -s
+
+
+########################################################################
+#Slide 43
+
+man chfn
+
+getent passwd bki
+sudo getent shadow bki
+
+id
+whoami
+groups
+
+#finger bki
+# finger is missing on RHEL9
+pinky bki
+
+
+########################################################################
+#Slide 44
+
+less /etc/default/useradd
+ls -al /etc/skel
+less /etc/login.defs
+man 5 login.defs
+ls -l /etc/security
+less /etc/security/pwquality.conf
+less /etc/security/limits.conf # ulimit for logins, see "man ulimit"
+less /etc/security/access.conf
