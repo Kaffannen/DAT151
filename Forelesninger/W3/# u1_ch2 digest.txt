@@ -1,0 +1,85 @@
+Booting and System Management Daemons
+
+Boot process and configuration
+    per diagram 
+        Power on
+        Load UEFI/BIOS from NVRAM (small non-volatile memory used for bootconfig stuff)
+        detect hardware
+        *select boot device
+            which ssd / usb?
+        Find the EFI partition
+            the efi contains bootloaders for different installed OS'es
+                (GRUB Grand unified bootloader for linux)
+                (Windows Boot Manager for Windows)
+        Load boot loader (GRUB if installed will take precedence)
+        *Determine which kernel to boot (if dual os)
+        start OS    
+            Load kernel
+            instantiate kernel data structures
+            start init/systemd as PID 1
+            *execute starup scripts
+        <system is running>
+
+
+
+Acronyms
+    Firmware that is ran when computer starts, to set up the OS
+    contains a basic gui for the user to select boot drive and make other alterations to boot configuration
+        BIOS = 
+        UEFI = Unified Extensible Firmware interface
+
+Firmware - code that exists on small storage, discovers hardware and initiates a bootloader which boots the OS
+    BIOS - Basic input output system
+        Boot flow
+            1 pc turned on
+            2 bios initializes hardware
+            3 bios finds master boot record (MBR) at the very start of the boot device (else fail)
+            4 load code in MBR, use it discover and run OS bootloader
+        Boot disk must start with MBR containing
+            first stage boot loader, boot block
+            disk partition table
+        Second stage boot loader
+            includes neccesary file system drivers to start OS
+            loads OS
+            Read from the acive partition or in deadzone before partition 1
+        All bios configs are done in Firmware
+            bios doesnt know about file systems or OS
+    UEFI - Unified Extensible Firmware interface
+        Acronyms
+            GUID - Globally unique identifier
+            GPT - GUID partition table
+                identifies the ESP and target application
+                stored as UEFI parameter
+                default target app is "efi/boot/bootx64.efi"
+            ESP - EFI system partition
+                this is where the bootloaders and config files are stored
+            FAT - File Allocation Table (MS_DOS filesystem)
+                UEFI can deal with FAT file systems, where BIOS configuration
+            NVRAM - non volatile ram (ssd like)
+        UEFI configurations can be modified in user space
+            So boot configurations can be edited from within an OS
+
+GRUB - Grand unified boot loader
+    Can boot several OS'es
+    Location
+        UEFI - in the ESP
+        BIOS - In the deadzone before first partition
+    GRUB can read its configurations from a file
+        Usually in grub.cfg in ESP or "boot/grub2" partition
+        does not survive updates 
+            OS installations trigger its regeneration, removing edits
+            instead edit "/etc/default/grub"
+                persist changes to ESP with "grub2 - mkconfig -o < path - to >/ grub.cfg"
+        GRUB can be used to specify which kernel is default
+            different kernels on the drive might happen because of updates
+                the new kernel is installed alongside old kernel, and new kernel is set to default device
+        GRUB can be interacted with through a command line environment it provides
+            press 'e' when in the OS selection menu
+            make alterations, they will only apply to this boot
+
+systemd
+    
+
+
+    
+    
