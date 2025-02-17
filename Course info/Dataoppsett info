@@ -1,0 +1,105 @@
+maskin 74 / almaone
+
+root pass = 'mypass'
+user = 'kaffannen' pass = 'pass'
+public ip = 158.37.32.175
+lan = 10.0.0.74/22
+
+db user = 'kaffannen' pass = 'KAFFPASS'
+db name = DAT151
+
+ssh prvate nøkkel
+
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEApba0dW9geB6vC7aOgxWud4x+9RSrKprlYbya5y3liWs2bjdq
+//l4ayO3j/1sST9kkhv4dLWk1WfGILdGzlZUjE0YzdbKmgj7ptskuq7mwk95XfEI
+1nJA2WgrmE7h4b+W2zxzzT2OF4WlJDBXhEnY3cPHif58+uhOa/gvLMF432GwjGZF
+5bkq6XwRcNxys2bqowZ5s+74oZZYMoh7sDg5WU5Jqdxw1bQ6uzUpQ+uhNemtu8RE
+rpQCi6XHQD+n4b9yecRI3dI6sFMfXw2IJMyHAxUZYVqcb6sXkTb/D4Z0pqstNc9c
+v2l6Stxcguq3BiRAXWEL+5+kBRrwoY6bBX3DsQIDAQABAoIBAAxd094+q02Thp8i
+ZsS4Cb7QrInIGtTxXcRbMZkmdu54IoX7mz/Sg27FadW0RRA7S5tOvI4jHxOw7Jt0
+6fMMhL86oqr7yD9SA8uqJ3XKBx0Bls5QpkbwnE/NIxG480joRg8C1iZ/HTs6pT4L
+4IAWDbnQ+jNdW0DTNMUAbq7Rml5bGm/TuO4lfnck9qwJ1lEd7nQFGTaA7eHJl6pB
+69tvshWCZPO9n74dWRw+XDLo6l1tBUAO9qVVf4ITSgncf/6+T+wYY/Hg5SjhVFye
+k2WC8Ym+E+JfnVj0xo+9hWo0A+ZTHsK+yEMuSCpb30ElU774hBfy45pud55AGjxf
+vrn4XPECgYEA1sF2h/2IFQp5IqYuvlQfk5mCw+iQIDP7h3IluJdQfXQ1IPl2DLsf
+gSou8NhbSVaypQk5DlN4Cj/a3TUvp4rSJINqU4oX8bkvfEkBfgn7qA3ITCZ72rZD
+Z/j67IsbuL8mqtvAWM/NDCv3KuVvlJwMBgOId8ubJygAwZS1fdXxJEkCgYEAxYoT
+BWb8Obt//dPMh44nDadhYvs34asmMjXT1ON1ov6n/m1yyMZDecSO5+ocotzThPUP
+vGR/VvFXGQo8b4E+bboI+wFfi5JJWeLYVg0IHfu+zLWGTCFhHajZdjUKlhgriJMc
+bZSip23/bNdUYSwKYTEcRQbv5qbqPNgPexQ/VCkCgYEAzY+TMKpKdrF2r+bX+VC2
+hOa8118ljd2UFtr5Jk6YOe1g6XY/PAJlLpK9KcY+4t081GIWnhLhZRYoHfNJ8Roc
++dxciyg0sSjsPg/3gLh3jS3cGp//j6NEtCILtR2WZGl7zrHX1Grbv5nZ1dKV0m7n
+x13cY6adlYZh6um4K4H8dxkCgYEApsxB52vgSjdiicfPih6kJ0lQWC3cL7c+l2MQ
+LVCrQihZXeK464NN8oHgUT9DUtm32Sq8UM1jINzEOKaGBXlSZ4CQmLG+JbIuMbH0
+DiUO15J8t4oHjj0ZLdwnU0LSX46lI7tkY7r/5PRim1rvKuXvFcZMIpUK+O20GBAw
+cjLUjpECgYAack+lLOh+NXlSaxsUW66/q8ERs5h8MPxIQ/o+YFyJH1OB4/sMT0nh
+PVkgCYNC/Jm+2nBuhzaiK0bP7JL35l2awxPl+e+UvvQlsLOwdCPoQbFcP1GfRFhp
+7ZD4LRmV6aFenKu7YrhRnuVjkw6c2I+pKBuadzhogwl9K0q+ecR2rw==
+-----END RSA PRIVATE KEY-----
+
+ssh public key
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCltrR1b2B4Hq8Lto6DFa53jH71FKsqmuVhvJrnLeWJazZuN2r/+XhrI7eP/WxJP2SSG/h0taTVZ8Ygt0bOVlSMTRjN1sqaCPum2yS6rubCT3ld8QjWckDZaCuYTuHhv5bbPHPNPY4XhaUkMFeESdjdw8eJ/nz66E5r+C8swXjfYbCMZkXluSrpfBFw3HKzZuqjBnmz7vihllgyiHuwODlZTkmp3HDVtDq7NSlD66E16a27xESulAKLpcdAP6fhv3J5xEjd0jqwUx9fDYgkzIcDFRlhWpxvqxeRNv8PhnSmqy01z1y/aXpK3FyC6rcGJEBdYQv7n6QFGvChjpsFfcOx 671420@stud.hvl.no
+
+connstring
+
+$key = @"
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEApba0dW9geB6vC7aOgxWud4x+9RSrKprlYbya5y3liWs2bjdq
+//l4ayO3j/1sST9kkhv4dLWk1WfGILdGzlZUjE0YzdbKmgj7ptskuq7mwk95XfEI
+1nJA2WgrmE7h4b+W2zxzzT2OF4WlJDBXhEnY3cPHif58+uhOa/gvLMF432GwjGZF
+5bkq6XwRcNxys2bqowZ5s+74oZZYMoh7sDg5WU5Jqdxw1bQ6uzUpQ+uhNemtu8RE
+rpQCi6XHQD+n4b9yecRI3dI6sFMfXw2IJMyHAxUZYVqcb6sXkTb/D4Z0pqstNc9c
+v2l6Stxcguq3BiRAXWEL+5+kBRrwoY6bBX3DsQIDAQABAoIBAAxd094+q02Thp8i
+ZsS4Cb7QrInIGtTxXcRbMZkmdu54IoX7mz/Sg27FadW0RRA7S5tOvI4jHxOw7Jt0
+6fMMhL86oqr7yD9SA8uqJ3XKBx0Bls5QpkbwnE/NIxG480joRg8C1iZ/HTs6pT4L
+4IAWDbnQ+jNdW0DTNMUAbq7Rml5bGm/TuO4l
+
+
+det er 2 faktor, jeg bruker samme som HVL (microsoft auth tror jeg)
+
+ssh -J -o "MACs -umac-128@openssh.com" hvl@eple.hvl.no konto@10.1.1.0
+
+
+$private_key = @"
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEApba0dW9geB6vC7aOgxWud4x+9RSrKprlYbya5y3liWs2bjdq
+//l4ayO3j/1sST9kkhv4dLWk1WfGILdGzlZUjE0YzdbKmgj7ptskuq7mwk95XfEI
+1nJA2WgrmE7h4b+W2zxzzT2OF4WlJDBXhEnY3cPHif58+uhOa/gvLMF432GwjGZF
+5bkq6XwRcNxys2bqowZ5s+74oZZYMoh7sDg5WU5Jqdxw1bQ6uzUpQ+uhNemtu8RE
+rpQCi6XHQD+n4b9yecRI3dI6sFMfXw2IJMyHAxUZYVqcb6sXkTb/D4Z0pqstNc9c
+v2l6Stxcguq3BiRAXWEL+5+kBRrwoY6bBX3DsQIDAQABAoIBAAxd094+q02Thp8i
+ZsS4Cb7QrInIGtTxXcRbMZkmdu54IoX7mz/Sg27FadW0RRA7S5tOvI4jHxOw7Jt0
+6fMMhL86oqr7yD9SA8uqJ3XKBx0Bls5QpkbwnE/NIxG480joRg8C1iZ/HTs6pT4L
+4IAWDbnQ+jNdW0DTNMUAbq7Rml5bGm/TuO4lfnck9qwJ1lEd7nQFGTaA7eHJl6pB
+69tvshWCZPO9n74dWRw+XDLo6l1tBUAO9qVVf4ITSgncf/6+T+wYY/Hg5SjhVFye
+k2WC8Ym+E+JfnVj0xo+9hWo0A+ZTHsK+yEMuSCpb30ElU774hBfy45pud55AGjxf
+vrn4XPECgYEA1sF2h/2IFQp5IqYuvlQfk5mCw+iQIDP7h3IluJdQfXQ1IPl2DLsf
+gSou8NhbSVaypQk5DlN4Cj/a3TUvp4rSJINqU4oX8bkvfEkBfgn7qA3ITCZ72rZD
+Z/j67IsbuL8mqtvAWM/NDCv3KuVvlJwMBgOId8ubJygAwZS1fdXxJEkCgYEAxYoT
+BWb8Obt//dPMh44nDadhYvs34asmMjXT1ON1ov6n/m1yyMZDecSO5+ocotzThPUP
+vGR/VvFXGQo8b4E+bboI+wFfi5JJWeLYVg0IHfu+zLWGTCFhHajZdjUKlhgriJMc
+bZSip23/bNdUYSwKYTEcRQbv5qbqPNgPexQ/VCkCgYEAzY+TMKpKdrF2r+bX+VC2
+hOa8118ljd2UFtr5Jk6YOe1g6XY/PAJlLpK9KcY+4t081GIWnhLhZRYoHfNJ8Roc
++dxciyg0sSjsPg/3gLh3jS3cGp//j6NEtCILtR2WZGl7zrHX1Grbv5nZ1dKV0m7n
+x13cY6adlYZh6um4K4H8dxkCgYEApsxB52vgSjdiicfPih6kJ0lQWC3cL7c+l2MQ
+LVCrQihZXeK464NN8oHgUT9DUtm32Sq8UM1jINzEOKaGBXlSZ4CQmLG+JbIuMbH0
+DiUO15J8t4oHjj0ZLdwnU0LSX46lI7tkY7r/5PRim1rvKuXvFcZMIpUK+O20GBAwt
+cjLUjpECgYAack+lLOh+NXlSaxsUW66/q8ERs5h8MPxIQ/o+YFyJH1OB4/sMT0nh
+PVkgCYNC/Jm+2nBuhzaiK0bP7JL35l2awxPl+e+UvvQlsLOwdCPoQbFcP1GfRFhp
+7ZD4LRmV6aFenKu7YrhRnuVjkw6c2I+pKBuadzhogwl9K0q+ecR2rw==
+-----END RSA PRIVATE KEY-----
+"@
+
+# Save the private key to a temporary file
+$private_key_path = [System.IO.Path]::Combine($env:TEMP, 'private_key.pem')
+$private_key | Out-File -FilePath $private_key_path
+
+# Run the SSH command using the private key file
+ssh -J hvl@eple.hvl.no -o "MACs umac-128@openssh.com" -i $private_key_path kaffannen@10.0.0.74
+
+# Optionally, clean up the temporary file after usage
+Remove-Item $private_key_path
+
+Jeg må opprette en fil id_rsa i mappen .ssh på dataen der jeg vil ssh'e fra
